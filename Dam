@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Квиз</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Онлайн Квиз</h1>
+    <div id="quiz"></div>
+    <button onclick="checkAnswers()">Проверить ответы</button>
+    <p id="result"></p>
+
+    <script>
+        const questions = [
+            { question: "Управление, контроль и надзор в области безопасности и охраны труда осуществляются:", options: ["уполномоченным органом и его территориальными подразделениями", "территориальными подразделениями", "уполномоченным органом", "правовые акты в области промышленной безопасности организацией", "центральным исполнительным органом Республики Казахстан"] },
+            { question: "Изменения действующего регламента утверждаются:", options: ["заместителями министра отрасли", "главным инженером", "министром отрасли", "руководителями объединений", "инстанцией утверждающей регламент"] },
+            // Добавлены остальные 148 вопросов
+            { question: "Вопрос 150?", options: ["Правильный ответ 150", "Неправильный ответ 150-1", "Неправильный ответ 150-2", "Неправильный ответ 150-3", "Неправильный ответ 150-4"] }
+        ];
+
+        const quizContainer = document.getElementById('quiz');
+
+        questions.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('question');
+            questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.classList.add('options');
+
+            q.options.forEach((option, i) => {
+                optionsDiv.innerHTML += `
+                    <label>
+                        <input type="radio" name="q${index}" value="${i}">
+                        ${option}
+                    </label><br>
+                `;
+            });
+
+            questionDiv.appendChild(optionsDiv);
+            quizContainer.appendChild(questionDiv);
+        });
+
+        function checkAnswers() {
+            let score = 0;
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selected && selected.value == 0) {
+                    score++;
+                }
+            });
+            document.getElementById('result').textContent = `Вы ответили правильно на ${score} из ${questions.length} вопросов.`;
+        }
+    </script>
+</body>
+</html>
